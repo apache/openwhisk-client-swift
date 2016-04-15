@@ -222,6 +222,13 @@ public class Whisk {
             syncName += "?blocking=true"
         }
         
+        guard let encodedPath = syncName.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet()) else {
+            callback(reply: nil, error: WhiskError.HTTPError(description: "URL Encode error \(syncName)", statusCode: 400))
+            return
+        }
+        
+        syncName = encodedPath
+        
         // create request
         guard let url = NSURL(string:actionURL+syncName) else {
             // send back error on main queue
@@ -229,7 +236,6 @@ public class Whisk {
             callback(reply: nil, error: WhiskError.HTTPError(description: "Malformed url \(actionURL+syncName)", statusCode: 400))
             
             return
-            
             
         }
         
