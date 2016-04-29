@@ -34,7 +34,7 @@ end
 Here is an example Cartfile for iOS installation using Carthage:  
 
 ```
-github "openwhisk/swift-client-sdk.git" ~> 0.1.0 # Or latest version
+github "openwhisk/openwhisk-client-swift.git" ~> 0.1.0 # Or latest version
 
 ```
 
@@ -47,7 +47,7 @@ import PackageDescription
 let package = Package(
   name:  "PackageTest",
   dependencies: [
-    .Package(url:  "https://github.com/openwhisk/swift-client-sdk.git", versions: Version(0,0,0)..<Version(1,0,0)),
+    .Package(url:  "https://github.com/openwhisk/openwhisk-client-swift.git", versions: Version(0,0,0)..<Version(1,0,0)),
   ]
 )
 ```
