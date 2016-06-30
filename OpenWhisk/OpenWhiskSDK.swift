@@ -211,10 +211,20 @@ public class Whisk {
         // append namespace and trigger/action path
         var syncName = "namespaces/"
         
+        var namespaceStr = namespace
+        
+        if namespace.characters.count == 0 {
+            namespaceStr = "_"
+        }
+        
         if let package = package {
-            syncName = syncName + namespace+"/"+typeStr+"/"+package+"/"+name
+            if package.characters.count == 0 {
+                syncName = syncName + namespaceStr+"/"+typeStr+"/"+name
+            } else {
+                syncName = syncName + namespaceStr+"/"+typeStr+"/"+package+"/"+name
+            }
         } else {
-            syncName = syncName + namespace+"/"+typeStr+"/"+name
+            syncName = syncName + namespaceStr+"/"+typeStr+"/"+name
         }
         
         // if action has results, specify as blocking
