@@ -44,18 +44,18 @@ public struct WhiskCredentials {
 }
 
 /* Error types for Whisk calls */
-public enum WhiskError: ErrorType {
-    case HTTPError(description: String, statusCode: Int) // something went wrong with the http call
-    case JsonError(description: String) // json wasn't right
-    case CredentialError(description: String) // something is wrong with the whisk credentials
-    case QualifiedNameFormat(description: String) // something is wrong in qualified name
-    case WhiskProcessingError(description: String, errorCode: Int) // something went wrong on the whisk side.
+public enum WhiskError: ErrorProtocol {
+    case httpError(description: String, statusCode: Int) // something went wrong with the http call
+    case jsonError(description: String) // json wasn't right
+    case credentialError(description: String) // something is wrong with the whisk credentials
+    case qualifiedNameFormat(description: String) // something is wrong in qualified name
+    case whiskProcessingError(description: String, errorCode: Int) // something went wrong on the whisk side.
 }
 
 /* Type of Whisk operation requested */
 enum WhiskType {
-    case Action
-    case Trigger
+    case action
+    case trigger
 }
 
 /* Main class to hold the calls to invoke Actions and fire Triggers */
@@ -71,7 +71,7 @@ public class Whisk {
     public var whiskBaseURL: String?
     
     // set to non-nil if using a custom session
-    public var urlSession: NSURLSession?
+    public var urlSession: URLSession?
     
     public var verboseReplies: Bool = false
     
@@ -114,14 +114,14 @@ public class Whisk {
     
     
     /* Base function to fire Whisk Trigger identified by qualified name */
-    public func fireTrigger(qualifiedName qualifiedName: String, parameters: AnyObject? = nil, callback: (reply: Dictionary<String,AnyObject>?, error:WhiskError?)->Void) throws {
+    public func fireTrigger(qualifiedName: String, parameters: AnyObject? = nil, callback: (reply: Dictionary<String,AnyObject>?, error:WhiskError?)->Void) throws {
         
         let pathParts = try Whisk.processQualifiedName(qualifiedName)
         try fireTrigger(name: pathParts.name, package: pathParts.package, namespace: pathParts.namespace, parameters: parameters, callback: callback)
     }
     
     /* Base function to invoke Whisk Action identified by qualified name */
-    public func invokeAction(qualifiedName qualifiedName: String, parameters: AnyObject?, hasResult: Bool = false, callback: (reply: Dictionary<String,AnyObject>?, error:WhiskError?)->Void) throws {
+    public func invokeAction(qualifiedName: String, parameters: AnyObject?, hasResult: Bool = false, callback: (reply: Dictionary<String,AnyObject>?, error:WhiskError?)->Void) throws {
         
         let pathParts = try Whisk.processQualifiedName(qualifiedName)
         try invokeAction(name: pathParts.name, package: pathParts.package, namespace: pathParts.namespace, parameters: parameters, hasResult: hasResult, callback: callback)
@@ -129,10 +129,10 @@ public class Whisk {
     
     
     /* Base function to fire Whisk Trigger identified by components */
-    public func fireTrigger(name name: String, package: String? = nil, namespace: String = "_", parameters: AnyObject? = nil, callback: (reply: Dictionary<String,AnyObject>?, error:WhiskError?)->Void) throws {
+    public func fireTrigger(name: String, package: String? = nil, namespace: String = "_", parameters: AnyObject? = nil, callback: (reply: Dictionary<String,AnyObject>?, error:WhiskError?)->Void) throws {
         
         if let accessKey = AccessKey, accessToken = AccessToken {
-            try httpRequestWhiskAPI(accessKey: accessKey, accessToken: accessToken, namespace: namespace, verb: "POST", type: .Trigger, package: package, name:name, parameters: parameters, isSync: false, callback: { (jsonArray, error) in
+            try httpRequestWhiskAPI(accessKey: accessKey, accessToken: accessToken, namespace: namespace, verb: "POST", type: .trigger, package: package, name:name, parameters: parameters, isSync: false, callback: { (jsonArray, error) in
                 if let error = error {
                     callback(reply: nil, error: error)
                 } else {
@@ -140,17 +140,17 @@ public class Whisk {
                 }
             })
         } else {
-            throw WhiskError.CredentialError(description: "Access key and token not set")
+            throw WhiskError.credentialError(description: "Access key and token not set")
         }
         
         
     }
     
     /* Base function to invoke Whisk Action identified by components */
-    public func invokeAction(name name: String, package: String? = nil, namespace: String = "_", parameters: AnyObject?, hasResult:Bool = false, callback: (reply: Dictionary<String,AnyObject>?, error: WhiskError?)-> Void) throws {
+    public func invokeAction(name: String, package: String? = nil, namespace: String = "_", parameters: AnyObject?, hasResult:Bool = false, callback: (reply: Dictionary<String,AnyObject>?, error: WhiskError?)-> Void) throws {
         if let accessKey = AccessKey, accessToken = AccessToken {
             
-            try httpRequestWhiskAPI(accessKey: accessKey, accessToken: accessToken, namespace: namespace, verb: "POST", type: .Action, package: package, name: name, parameters: parameters, isSync: hasResult, callback: {(jsonDict, error) in
+            try httpRequestWhiskAPI(accessKey: accessKey, accessToken: accessToken, namespace: namespace, verb: "POST", type: .action, package: package, name: name, parameters: parameters, isSync: hasResult, callback: {(jsonDict, error) in
                 if let error = error {
                     callback(reply: nil, error: error)
                 } else {
@@ -159,13 +159,13 @@ public class Whisk {
                 
             })
         } else {
-            throw WhiskError.CredentialError(description: "Access key and token not set")
+            throw WhiskError.credentialError(description: "Access key and token not set")
         }
         
     }
     
     /* can redirect call here, e.g. if mocking */
-    func httpRequestWhiskAPI(accessKey accessKey: String, accessToken: String, namespace: String, verb: String, type: WhiskType, package: String?, name: String, parameters: AnyObject?, isSync: Bool, callback: (reply: Dictionary<String,AnyObject>?, error:WhiskError?) ->Void) throws {
+    func httpRequestWhiskAPI(accessKey: String, accessToken: String, namespace: String, verb: String, type: WhiskType, package: String?, name: String, parameters: AnyObject?, isSync: Bool, callback: (reply: Dictionary<String,AnyObject>?, error:WhiskError?) ->Void) throws {
         
         if useMock {
             callback(reply:mockReply, error: mockError)
@@ -177,7 +177,7 @@ public class Whisk {
     
     
     /* Network call */
-    func whiskAPI(accessKey accessKey: String, accessToken: String, namespace: String, verb: String, type: WhiskType, package: String?, name: String, parameters: AnyObject?, isSync: Bool, callback: (reply: Dictionary<String,AnyObject>?, error:WhiskError?) ->Void) throws {
+    func whiskAPI(accessKey: String, accessToken: String, namespace: String, verb: String, type: WhiskType, package: String?, name: String, parameters: AnyObject?, isSync: Bool, callback: (reply: Dictionary<String,AnyObject>?, error:WhiskError?) ->Void) throws {
         
         // set parameters
         var paramsIsDict = false
@@ -189,22 +189,22 @@ public class Whisk {
         
         // set authorization string
         let loginString = NSString(format: "%@:%@", accessKey, accessToken)
-        let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
-        let base64LoginString = loginData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        let loginData: Data = loginString.data(using: String.Encoding.utf8.rawValue)!
+        let base64LoginString = loginData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
         let typeStr: String!
         
         // set type
         switch type {
-        case .Action:
+        case .action:
             typeStr = "actions"
-        case .Trigger:
+        case .trigger:
             typeStr = "triggers"
         }
         
         // get base URL
         guard let actionURL = baseURL != nil ? baseURL : Config.getHostAndPath(type: typeStr) else {
-            callback(reply: nil, error: WhiskError.HTTPError(description: "Base URL not set, try using whisk.baseUrl setting", statusCode: 400))
+            callback(reply: nil, error: WhiskError.httpError(description: "Base URL not set, try using whisk.baseUrl setting", statusCode: 400))
             return
         }
         
@@ -232,41 +232,41 @@ public class Whisk {
             syncName += "?blocking=true"
         }
         
-        guard let encodedPath = syncName.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet()) else {
-            callback(reply: nil, error: WhiskError.HTTPError(description: "URL Encode error \(syncName)", statusCode: 400))
+        guard let encodedPath = syncName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
+            callback(reply: nil, error: WhiskError.httpError(description: "URL Encode error \(syncName)", statusCode: 400))
             return
         }
         
         syncName = encodedPath
         
         // create request
-        guard let url = NSURL(string:actionURL+syncName) else {
+        guard let url = URL(string:actionURL+syncName) else {
             // send back error on main queue
             
-            callback(reply: nil, error: WhiskError.HTTPError(description: "Malformed url \(actionURL+syncName)", statusCode: 400))
+            callback(reply: nil, error: WhiskError.httpError(description: "Malformed url \(actionURL+syncName)", statusCode: 400))
             
             return
             
         }
         
-        let request = NSMutableURLRequest(URL: url)
+        var request = URLRequest(url: url)
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
-        request.HTTPMethod = verb
+        request.httpMethod = verb
         
         // create JSON from parameters dictionary
         do {
             
             if let parameters = parameters {
                 if paramsIsDict {
-                    request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(parameters, options: NSJSONWritingOptions())
+                    request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: JSONSerialization.WritingOptions())
                 } else {
                     if parameters is String {
                         let str = "{\"payload\":\"\(parameters as! String)\"}"
-                        request.HTTPBody = str.dataUsingEncoding(NSUTF8StringEncoding)
+                        request.httpBody = str.data(using: String.Encoding.utf8)
                     } else {
                         let str = "{\"payload\": \(parameters)}"
-                        request.HTTPBody = str.dataUsingEncoding(NSUTF8StringEncoding)
+                        request.httpBody = str.data(using: String.Encoding.utf8)
                     }
                 }
             }
@@ -277,36 +277,36 @@ public class Whisk {
         
         
         // retrieve session as default or use developer specified session
-        let sess: NSURLSession!
+        let sess: URLSession!
         if let _ = urlSession {
             sess = urlSession
         } else {
-            let sessConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-            sess = NSURLSession(configuration: sessConfig)
+            let sessConfig = URLSessionConfiguration.default
+            sess = URLSession(configuration: sessConfig)
         }
         
         // perform network request
-        let task = sess.dataTaskWithRequest(request) {
+        let task = sess.dataTask(with: request) {
             data, response, error in
             let statusCode: Int!
             
             if let error = error {
                 
-                if let httpResponse = response as? NSHTTPURLResponse {
+                if let httpResponse = response as? HTTPURLResponse {
                     statusCode = httpResponse.statusCode
                 } else {
                     statusCode = -1
                 }
                 // return network transport error call on main queue
-                dispatch_async(dispatch_get_main_queue()) {
-                    callback(reply: nil, error: WhiskError.HTTPError(description: "\(error.localizedDescription)", statusCode: statusCode))
+                DispatchQueue.main.async {
+                    callback(reply: nil, error: WhiskError.httpError(description: "\(error.localizedDescription)", statusCode: statusCode))
                 }
                 
                 return
                 
             } else {
                 
-                if let httpResponse = response as? NSHTTPURLResponse {
+                if let httpResponse = response as? HTTPURLResponse {
                     statusCode = httpResponse.statusCode
                     do {
                         // success
@@ -317,7 +317,7 @@ public class Whisk {
                             case "POST":
                                 var jsonDict = [String:AnyObject]()
                                 
-                                let respDict = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! Dictionary<String, AnyObject>
+                                let respDict = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! Dictionary<String, AnyObject>
                                 jsonDict = respDict
                                 
                                 
@@ -328,8 +328,8 @@ public class Whisk {
                                         errorCode = code
                                     }
                                     // send back error on main queue
-                                    dispatch_async(dispatch_get_main_queue()) {
-                                        callback(reply: nil, error: WhiskError.WhiskProcessingError(description: "errorCode:\(errorCode), \(whiskError)", errorCode: errorCode))
+                                    DispatchQueue.main.async {
+                                        callback(reply: nil, error: WhiskError.whiskProcessingError(description: "errorCode:\(errorCode), \(whiskError)", errorCode: errorCode))
                                     }
                                     
                                 } else {
@@ -352,7 +352,9 @@ public class Whisk {
                                                     let payload:AnyObject? = actionResult
                                                     if payload is String {
                                                         do {
-                                                            let payloadObj:AnyObject? = try NSJSONSerialization.JSONObjectWithData(payload!.dataUsingEncoding(NSUTF8StringEncoding)!, options:[])
+                                                            
+                                                           let payloadObj =  try JSONSerialization.jsonObject(with: (payload as! String).data(using: String.Encoding.utf8)!, options: [])
+                                                           
                                                             whiskReply["result"] = (payloadObj as? [String:AnyObject])!
                                                         } catch {
                                                             print("Error parsing payload into JSON, defaulting to string")
@@ -368,7 +370,7 @@ public class Whisk {
                                     }
                                     
                                     // send back successful response on main queue
-                                    dispatch_async(dispatch_get_main_queue()) {
+                                    DispatchQueue.main.async {
                                         callback(reply: whiskReply, error: nil)
                                     }
                                 }
@@ -376,10 +378,10 @@ public class Whisk {
                                 // get info about actions/triggers
                                 // not used right now
                             case "GET":
-                                let jsonArray = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+                                let jsonArray = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSArray
                                 let jsonDict:Dictionary<String, AnyObject> = ["array":jsonArray]
                                 
-                                dispatch_async(dispatch_get_main_queue()) {
+                                DispatchQueue.main.async {
                                     callback(reply: jsonDict, error: nil)
                                 }
                                 
@@ -388,15 +390,15 @@ public class Whisk {
                                 
                             }
                         } else {
-                            dispatch_async(dispatch_get_main_queue()) {
-                                callback(reply: nil, error: WhiskError.HTTPError(description: "Whisk returned HTTP error code", statusCode: statusCode))
+                            DispatchQueue.main.async {
+                                callback(reply: nil, error: WhiskError.httpError(description: "Whisk returned HTTP error code", statusCode: statusCode))
                             }
                         }
                         
                     } catch {
                         print("Error parsing JSON from Whisk response: \(error)")
-                        dispatch_async(dispatch_get_main_queue()) {
-                            callback(reply: nil, error: WhiskError.JsonError(description: "\(error)"))
+                        DispatchQueue.main.async {
+                            callback(reply: nil, error: WhiskError.jsonError(description: "\(error)"))
                         }
                     }
                 }
@@ -409,7 +411,7 @@ public class Whisk {
     }
     
     /* Convert qualified name string into component parts of action or trigger call */
-    class func processQualifiedName(qName: String) throws -> (namespace:String, package: String?, name: String) {
+    class func processQualifiedName(_ qName: String) throws -> (namespace:String, package: String?, name: String) {
         var namespace = "_"
         var package: String? = nil
         var name = ""
@@ -430,7 +432,7 @@ public class Whisk {
                 package = pathParts[1]
                 name = pathParts[2]
             } else {
-                throw WhiskError.QualifiedNameFormat(description: "Cannot parse \(qName)")
+                throw WhiskError.qualifiedNameFormat(description: "Cannot parse \(qName)")
             }
         } else {
             if pathParts.count == 1 {
@@ -439,7 +441,7 @@ public class Whisk {
                 package = pathParts[0]
                 name = pathParts[1]
             } else {
-                throw WhiskError.QualifiedNameFormat(description: "Cannot parse \(qName)")
+                throw WhiskError.qualifiedNameFormat(description: "Cannot parse \(qName)")
             }
         }
         
