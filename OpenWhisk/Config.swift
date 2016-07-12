@@ -21,14 +21,18 @@ import Foundation
 */
 public class Config {
     
+<<<<<<< 42847cb29eb244df0cfcf5c29bb8229ad700e604
     static let ApiKeyName = "OPENWHISK_TESTAPIKEY"
     static let ApiSecretName = "OPENWHISK_TESTAPISECRET"
     
     public class func getHostAndPath(type type:String) -> String? {
+=======
+    public class func getHostAndPath(type:String) -> String? {
+>>>>>>> Update to 7/5 Swift 3 syntax
         
         var url: String? = nil
         if let dict = getConfigDictionary() {
-            url = dict.valueForKey(type) as? String
+            url = dict.value(forKey: type) as? String
         } else {
             print("Configuration file missing, cannot config network call")
         }
@@ -41,10 +45,10 @@ public class Config {
         
         // Attempt 1, load the bundle from a local reference to this classes bundle
         // I'am assuming the WhiskResources bundle is in the framework's root bundle
-        let frameworkBundle = NSBundle(forClass: Config.self)
+        let frameworkBundle = Bundle(for: Config.self)
         
         if let bundlePath = frameworkBundle.pathForResource("OpenWhiskResources", ofType: "bundle") {
-            if let bundle = NSBundle(path: bundlePath) {
+            if let bundle = Bundle(path: bundlePath) {
                 let configFile = bundle.pathForResource("OpenWhiskConfig", ofType: "plist")
                 
                 if let configFile = configFile {
@@ -56,7 +60,7 @@ public class Config {
                 }
             }
         } else if let bundlePath = frameworkBundle.pathForResource("OpenWhiskWatchResources", ofType: "bundle") {
-            if let bundle = NSBundle(path: bundlePath) {
+            if let bundle = Bundle(path: bundlePath) {
                 let configFile = bundle.pathForResource("OpenWhiskConfig", ofType: "plist")
                 
                 if let configFile = configFile {
@@ -91,9 +95,15 @@ public class Config {
     */
     public class func getAuthToken() -> (apiKey: String?, apiSecret: String?)? {
         
+<<<<<<< 42847cb29eb244df0cfcf5c29bb8229ad700e604
         let dict = NSProcessInfo.processInfo().environment
         let key = dict[Config.ApiKeyName]
         let secret = dict[Config.ApiSecretName]
+=======
+        let dict = ProcessInfo.processInfo.environment
+        let key = dict["TESTAPIKEY"]
+        let secret = dict["TESTAPISECRET"]
+>>>>>>> Update to 7/5 Swift 3 syntax
         
         return(key, secret)
     }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		92BBA3A71D64D0660026EC66 /* OpenWhisk.h in Headers */ = {isa = PBXBuildFile; fileRef = D6E3E6391C72592300843E16 /* OpenWhisk.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D64559FC1C8F49A600AA6840 /* OpenWhiskButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E3E6511C72760C00843E16 /* OpenWhiskButton.swift */; };
 		D6C9C3B71C8F53C9002BDB13 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C9C3B41C8F53C9002BDB13 /* Config.swift */; };
 		D6C9C3B81C8F53C9002BDB13 /* OpenWhiskConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6C9C3B51C8F53C9002BDB13 /* OpenWhiskConfig.plist */; };
@@ -211,9 +210,11 @@
 				TargetAttributes = {
 					D6E3E6351C72592300843E16 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0800;
 					};
 					D6E3E63F1C72592300843E16 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0800;
 					};
 					D6F56ADE1C76471B00F047B6 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -411,6 +412,7 @@
 				PRODUCT_NAME = OpenWhisk;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -429,6 +431,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.openwhisk.OpenWhisk;
 				PRODUCT_NAME = OpenWhisk;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -438,7 +441,8 @@
 				INFOPLIST_FILE = OpenWhiskTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.mobile.openwhisk.OpenWhiskTests;
-				PRODUCT_NAME = "OpenWhisk Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -448,7 +452,8 @@
 				INFOPLIST_FILE = OpenWhiskTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.mobile.openwhisk.OpenWhiskTests;
-				PRODUCT_NAME = "OpenWhisk Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
