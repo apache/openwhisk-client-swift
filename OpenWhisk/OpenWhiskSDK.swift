@@ -45,7 +45,7 @@ public struct WhiskCredentials {
 
 /* Error types for Whisk calls */
 public enum WhiskError: ErrorType {
-    case HTTPError(description: String, statusCode: Int) // something went wrong with the http call
+    case HTTPError(description: String, statusCode: Int, url: String) // something went wrong with the http call
     case JsonError(description: String) // json wasn't right
     case CredentialError(description: String) // something is wrong with the whisk credentials
     case QualifiedNameFormat(description: String) // something is wrong in qualified name
@@ -204,7 +204,7 @@ public class Whisk {
         
         // get base URL
         guard let actionURL = baseURL != nil ? baseURL : Config.getHostAndPath(type: typeStr) else {
-            callback(reply: nil, error: WhiskError.HTTPError(description: "Base URL not set, try using whisk.baseUrl setting", statusCode: 400))
+            callback(reply: nil, error: WhiskError.HTTPError(description: "Base URL not set, try using whisk.baseUrl setting", statusCode: 400, url: "Undefined"))
             return
         }
         
@@ -232,8 +232,11 @@ public class Whisk {
             syncName += "?blocking=true"
         }
         
+        // use this for verbose replies
+        let restCall = actionURL+syncName
+        
         guard let encodedPath = syncName.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet()) else {
-            callback(reply: nil, error: WhiskError.HTTPError(description: "URL Encode error \(syncName)", statusCode: 400))
+            callback(reply: nil, error: WhiskError.HTTPError(description: "URL Encode error \(syncName)", statusCode: 400, url: restCall))
             return
         }
         
@@ -243,7 +246,7 @@ public class Whisk {
         guard let url = NSURL(string:actionURL+syncName) else {
             // send back error on main queue
             
-            callback(reply: nil, error: WhiskError.HTTPError(description: "Malformed url \(actionURL+syncName)", statusCode: 400))
+            callback(reply: nil, error: WhiskError.HTTPError(description: "Malformed url", statusCode: 400, url: restCall))
             
             return
             
@@ -299,7 +302,7 @@ public class Whisk {
                 }
                 // return network transport error call on main queue
                 dispatch_async(dispatch_get_main_queue()) {
-                    callback(reply: nil, error: WhiskError.HTTPError(description: "\(error.localizedDescription)", statusCode: statusCode))
+                    callback(reply: nil, error: WhiskError.HTTPError(description: "\(error.localizedDescription)", statusCode: statusCode, url: restCall))
                 }
                 
                 return
@@ -338,6 +341,15 @@ public class Whisk {
                                     
                                     if self.verboseReplies == true {
                                         whiskReply = jsonDict
+                                        
+                                        // add the rest call made to verbose replies for debugging
+                                        switch type {
+                                        case .Action:
+                                            whiskReply["actionUrl"] = restCall
+                                        case .Trigger:
+                                            whiskReply["triggerUrl"] = restCall
+                                        }
+                                        
                                     } else {
                                         let reply = jsonDict
                                         whiskReply["activationId"] = reply["activationId"]
@@ -389,7 +401,7 @@ public class Whisk {
                             }
                         } else {
                             dispatch_async(dispatch_get_main_queue()) {
-                                callback(reply: nil, error: WhiskError.HTTPError(description: "Whisk returned HTTP error code", statusCode: statusCode))
+                                callback(reply: nil, error: WhiskError.HTTPError(description: "Whisk returned HTTP error code", statusCode: statusCode, url:restCall))
                             }
                         }
                         
