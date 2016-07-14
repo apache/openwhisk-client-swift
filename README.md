@@ -12,6 +12,8 @@ To build the source code:
 - Locate the binary framework file (usually in `debug` or `release` directories at `~/Library/Developer/Xcode/DerivedData/$projectName-*`) and add it to the "Embedded Binaries" list in the General settings of your apps' target.
 
 ### CocoaPods Installation
+The [official CocoaPods website](http://cocoapods.org) has detailed instructions on how to install and use CocoaPods.
+
 The following lines in a Podfile will install the SDK for an iOS app with a watch OS 2 extension: 
 
 ```
@@ -31,6 +33,9 @@ end
 ```
 
 ### Carthage Installation
+
+Visit the [official Carthage site on Github](https://github.com/Carthage/Carthage) for detailed instructions on installing and using Carthage.
+
 Here is an example Cartfile for iOS installation using Carthage:  
 
 ```
