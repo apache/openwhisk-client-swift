@@ -150,7 +150,7 @@ do {
     print("Error \(error)")
 }
 ```
-By default, the SDK will only return the activationId and any result produced by the invoked action.  To get metadata of the entire response object, which includes the HTTP response status code, use this setting:
+By default, the SDK will only return the activationId and any result produced by the invoked action.  To get metadata of the entire response object, which includes the HTTP response status code and the REST API URL the SDK tried to call, use this setting:
 
 ```
 whisk.verboseReplies = true
