@@ -156,6 +156,8 @@ By default, the SDK will only return the activationId and any result produced by
 whisk.verboseReplies = true
 ```
 
+The REST API URL called will be in the actionUrl/triggerUrl fields of the response.
+
 ## SDK configuration
 
 You can configure the SDK to work with different installations of OpenWhisk using the baseURL parameter. For instance:
