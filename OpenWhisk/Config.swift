@@ -21,6 +21,9 @@ import Foundation
 */
 public class Config {
     
+    static let ApiKeyName = "OPENWHISK_TESTAPIKEY"
+    static let ApiSecretName = "OPENWHISK_TESTAPISECRET"
+    
     public class func getHostAndPath(type type:String) -> String? {
         
         var url: String? = nil
@@ -89,8 +92,8 @@ public class Config {
     public class func getAuthToken() -> (apiKey: String?, apiSecret: String?)? {
         
         let dict = NSProcessInfo.processInfo().environment
-        let key = dict["TESTAPIKEY"]
-        let secret = dict["TESTAPISECRET"]
+        let key = dict[Config.ApiKeyName]
+        let secret = dict[Config.ApiSecretName]
         
         return(key, secret)
     }
