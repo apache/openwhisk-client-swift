@@ -70,6 +70,18 @@
             ReferencedContainer = "container:OpenWhisk.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OPENWHISK_TESTAPISECRET"
+            value = "$OPENWHISK_TESTAPISECRET"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "OPENWHISK_TESTAPIKEY"
+            value = "$OPENWHISK_TESTAPIKEY"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
