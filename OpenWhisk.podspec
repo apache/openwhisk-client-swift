@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'OpenWhisk'
-	s.version      = '0.1.6'
+	s.version      = '0.1.7'
 	s.summary      = 'Mobile SDK to use OpenWhisk server-less environment'
 	s.homepage     = 'http://www.ibm.com/mobilefirst/us/en/'
 	s.license      = { :type => 'Apache License, Version 2.0' }
