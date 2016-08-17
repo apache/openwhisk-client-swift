@@ -17,18 +17,15 @@ The [official CocoaPods website](http://cocoapods.org) has detailed instructions
 The following lines in a Podfile will install the SDK for an iOS app with a watch OS 2 extension: 
 
 ```
-source 'https://github.com/openwhisk/openwhisk-podspecs.git'
-
+install! 'cocoapods', :deterministic_uuids => false
 use_frameworks!
 
 target 'MyApp' do
-     platform :ios, '9.0'
      pod 'OpenWhisk'
 end
 
 target 'MyApp WatchKit Extension' do 
-     platform :watchos, '2.0'
-     pod 'OpenWhiskWatch'
+     pod 'OpenWhisk'
 end
 ```
 
