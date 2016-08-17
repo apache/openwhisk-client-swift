@@ -10,15 +10,18 @@ Pod::Spec.new do |s|
 	s.description  = <<-DESC
 	OpenWhisk is a cloud-first distributed event-based programming service. OpenWhisk provides a programming model to upload event handlers to a cloud service, and register the handlers to respond to various events.
 
-	It's cool.
 	DESC
 
-	s.platform = :ios, '9.0'
-	s.frameworks = 'Foundation', 'WatchConnectivity'
+	s.ios.deployment_target = '9.0'
+	s.watchos.deployment_target = '2.0'
 
 	s.source       = { :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => "#{s.version}" }
 
+
 	s.source_files  = 'OpenWhisk/*.{swift,h}'
+	s.watchos.exclude_files = 'OpenWhisk/OpenWhiskButton.swift'
+
+	s.frameworks = 'Foundation', 'WatchConnectivity'
 	s.resource_bundles = {'OpenWhiskResources' =>  ['OpenWhisk/OpenWhiskConfig.plist']}
 
 end
