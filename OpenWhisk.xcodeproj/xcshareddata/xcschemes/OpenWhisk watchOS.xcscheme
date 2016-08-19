@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D6F56ADE1C76471B00F047B6"
-               BuildableName = "OpenWhiskWatch.framework"
-               BlueprintName = "OpenWhiskWatch"
+               BuildableName = "OpenWhisk.framework"
+               BlueprintName = "OpenWhisk watchOS"
                ReferencedContainer = "container:OpenWhisk.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D6F56ADE1C76471B00F047B6"
-            BuildableName = "OpenWhiskWatch.framework"
-            BlueprintName = "OpenWhiskWatch"
+            BuildableName = "OpenWhisk.framework"
+            BlueprintName = "OpenWhisk watchOS"
             ReferencedContainer = "container:OpenWhisk.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,8 +64,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D6F56ADE1C76471B00F047B6"
-            BuildableName = "OpenWhiskWatch.framework"
-            BlueprintName = "OpenWhiskWatch"
+            BuildableName = "OpenWhisk.framework"
+            BlueprintName = "OpenWhisk watchOS"
             ReferencedContainer = "container:OpenWhisk.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
