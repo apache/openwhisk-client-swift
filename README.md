@@ -21,11 +21,11 @@ install! 'cocoapods', :deterministic_uuids => false
 use_frameworks!
 
 target 'MyApp' do
-     pod 'OpenWhisk'
+     pod 'OpenWhisk', :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => '0.1.7'
 end
 
 target 'MyApp WatchKit Extension' do 
-     pod 'OpenWhisk'
+     pod 'OpenWhisk', :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => '0.1.7'
 end
 ```
 
@@ -36,7 +36,7 @@ Visit the [official Carthage site on Github](https://github.com/Carthage/Carthag
 Here is an example Cartfile for iOS installation using Carthage:  
 
 ```
-github "openwhisk/openwhisk-client-swift.git" ~> 0.1.0 # Or latest version
+github "openwhisk/openwhisk-client-swift.git" ~> 0.1.7 # Or latest version
 
 ```
 
@@ -81,7 +81,7 @@ The strings before and after the colon are your key and token, respectively.
 ### Invoke an OpenWhisk Action
 Call "invokeAction" with the action name to invoke a remote action. You can specify the namespace the action belongs to, or just leave it blank to accept the default namespace.  Use a dictionary to pass parameters to the action as required.
 
-```
+```swift
 // In this example, we are invoking an action to print a message to the OpenWhisk Console
 var params = Dictionary<String, String>()
 params["payload"] = "Hi from mobile"
@@ -105,7 +105,8 @@ In the above example, we are invoking the "helloConsole" action using the defaul
 
 ### Fire an OpenWhisk Trigger
 To fire a remote OpenWhisk trigger, call the "fireTrigger" method.  Pass in parameters as required using a dictionary.
-```
+
+```swift
 // In this example we are firing a trigger when our location has changed by a certain amount
 
 var locationParams = Dictionary<String, String>()
@@ -128,7 +129,8 @@ In the above example, we are firing a trigger "locationChanged".
 
 ### Actions that return a result
 If the action returns a result, set hasResult to true in the invokeAction call. The result of the action is returned in the reply dictionary, for example:
-```
+
+```swift
 do {
     try whisk.invokeAction(name: "actionWithResult", package: "mypackage", namespace: "mynamespace", parameters: params, hasResult: true, callback: {(reply, error) -> Void in
         
@@ -159,14 +161,14 @@ The REST API URL called will be in the actionUrl/triggerUrl fields of the respon
 
 You can configure the SDK to work with different installations of OpenWhisk using the baseURL parameter. For instance:
 
-```
+```swift
 whisk.baseURL = "http://localhost:8080"
 ```
 will use an OpenWhisk running at localhost:8080.  If you do not specify the baseUrl, the Mobile SDK will use the instance running at https://openwhisk.ng.bluemix.net
 
 You can pass in a custom NSURLSession in case you require special network handling.  For example, you may have your own OpenWhisk installation that uses self-signed certificates:
 
-```
+```swift
 
 // create a network delegate that trusts everything
 class NetworkUtilsDelegate: NSObject, NSURLSessionDelegate {
@@ -195,7 +197,7 @@ All other combinations will throw a WhiskError.QualifiedName error. When using q
 #### SDK Button
 For convenience, the iOS version of the SDK includes a WhiskButton, which extends the UIButton to allow it to invoke OpenWhisk actions.  To use this:
 
-```
+```swift
 var whiskButton = WhiskButton(frame: CGRectMake(0,0,20,20))
 
 whiskButton.setupWhiskAction("helloConsole", package: "mypackage", namespace: "_", credentials: credentialsConfiguration!, hasResult: false, parameters: nil, urlSession: nil)
