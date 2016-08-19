@@ -28,6 +28,7 @@ target 'MyApp WatchKit Extension' do
      pod 'OpenWhisk', :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => '0.1.7'
 end
 ```
+You may get the warning 'target overrides the `EMBEDDED_CONTENT_CONTAINS_SWIFT` ' when you have a watch target.  You can eliminate this warning by changing this setting in "Build Settings" to the value '$(inherited)'.
 
 ### Carthage Installation
 
