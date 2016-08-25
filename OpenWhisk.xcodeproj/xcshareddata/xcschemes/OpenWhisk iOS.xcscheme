@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D6E3E63F1C72592300843E16"
+               BuildableName = "OpenWhisk Tests.xctest"
+               BlueprintName = "OpenWhisk Tests"
+               ReferencedContainer = "container:OpenWhisk.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D6E3E6351C72592300843E16"
+            BuildableName = "OpenWhisk.framework"
+            BlueprintName = "OpenWhisk iOS"
+            ReferencedContainer = "container:OpenWhisk.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -51,6 +70,18 @@
             ReferencedContainer = "container:OpenWhisk.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OPENWHISK_TESTAPIKEY"
+            value = "$OPENWHISK_TESTAPIKEY"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "OPENWHISK_TESTAPISECRET"
+            value = "$OPENWHISK_TESTAPISECRET"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
