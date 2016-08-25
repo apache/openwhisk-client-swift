@@ -56,7 +56,7 @@ import UIKit
             isListeningToSelf = newValue
         }
     }
-    public var actionButtonCallback: ((reply: Dictionary<String,AnyObject>?, error: WhiskError?) -> Void)?
+    public var actionButtonCallback: ((Dictionary<String,Any>?, WhiskError?) -> Void)?
     
     
     func buttonPressed() {
@@ -89,9 +89,9 @@ import UIKit
         actionHasResult = hasResult
     }
     
-    public func invokeAction(parameters: [String:AnyObject]? = nil, actionCallback: ((reply: Dictionary<String,AnyObject>?, error: WhiskError?) -> Void)?) {
+    public func invokeAction(parameters: [String:AnyObject]? = nil, actionCallback: ((Dictionary<String,Any>?, WhiskError?) -> Void)?) {
         
-        if let whisk = whisk, actionName = actionName, actionNamespace = actionNamespace {
+        if let whisk = whisk, let actionName = actionName, let actionNamespace = actionNamespace {
             
             let queue = DispatchQueue(label:"com.ibm.mobilefirst.openwhisk.invokeAction")
             queue.async(qos: .userInitiated) {
@@ -105,12 +105,12 @@ import UIKit
                         params = self.actionParameters
                     }
                     
-                    try whisk.invokeAction(name: actionName, package: self.actionPackage, namespace: actionNamespace, parameters: params, hasResult: self.actionHasResult, callback: {(reply, error) in
+                    try whisk.invokeAction(name: actionName, package: self.actionPackage, namespace: actionNamespace, parameters: params as AnyObject?, hasResult: self.actionHasResult, callback: {(reply, error) in
                         
                         
                         // note callback is in main queue already we should be on the UI thread
                         if let actionCallback = actionCallback {
-                            actionCallback(reply:reply, error: error)
+                            actionCallback(reply, error)
                         }
                         
                         

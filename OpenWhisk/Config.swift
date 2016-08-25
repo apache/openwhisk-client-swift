@@ -40,35 +40,35 @@ public class Config {
         // I'am assuming the WhiskResources bundle is in the framework's root bundle
         let frameworkBundle = Bundle(for: Config.self)
         
-        if let bundlePath = frameworkBundle.pathForResource("OpenWhiskResources", ofType: "bundle") {
+        if let bundlePath = frameworkBundle.path(forResource: "OpenWhiskResources", ofType: "bundle") {
             if let bundle = Bundle(path: bundlePath) {
-                let configFile = bundle.pathForResource("OpenWhiskConfig", ofType: "plist")
+                let configFile = bundle.path(forResource: "OpenWhiskConfig", ofType: "plist")
                 
                 if let configFile = configFile {
                     let config = NSDictionary(contentsOfFile: configFile) as? [String: AnyObject]
                     if let config = config {
-                        let urlConfig = config["Locations"] as? [String: String]
+                        let urlConfig = config["Locations"] as? NSDictionary
                         return urlConfig
                     }
                 }
             }
-        } else if let bundlePath = frameworkBundle.pathForResource("OpenWhiskWatchResources", ofType: "bundle") {
+        } else if let bundlePath = frameworkBundle.path(forResource: "OpenWhiskWatchResources", ofType: "bundle") {
             if let bundle = Bundle(path: bundlePath) {
-                let configFile = bundle.pathForResource("OpenWhiskConfig", ofType: "plist")
+                let configFile = bundle.path(forResource: "OpenWhiskConfig", ofType: "plist")
                 
                 if let configFile = configFile {
                     let config = NSDictionary(contentsOfFile: configFile) as? [String: AnyObject]
                     if let config = config {
-                        let urlConfig = config["Locations"] as? [String: String]
+                        let urlConfig = config["Locations"] as? NSDictionary
                         return urlConfig
                     }
                 }
             }
         } else {
-            if let configFile = frameworkBundle.pathForResource("OpenWhiskConfig", ofType: "plist") {
+            if let configFile = frameworkBundle.path(forResource: "OpenWhiskConfig", ofType: "plist") {
                 let config = NSDictionary(contentsOfFile: configFile) as? [String: AnyObject]
                 if let config = config {
-                    let urlConfig = config["Locations"] as? [String: String]
+                    let urlConfig = config["Locations"] as? NSDictionary
                     return urlConfig
                 }
             } else {
