@@ -21,15 +21,8 @@ import Foundation
 */
 public class Config {
     
-<<<<<<< 42847cb29eb244df0cfcf5c29bb8229ad700e604
-    static let ApiKeyName = "OPENWHISK_TESTAPIKEY"
-    static let ApiSecretName = "OPENWHISK_TESTAPISECRET"
-    
-    public class func getHostAndPath(type type:String) -> String? {
-=======
-    public class func getHostAndPath(type:String) -> String? {
->>>>>>> Update to 7/5 Swift 3 syntax
-        
+
+     class func getHostAndPath(type:String) -> String? {
         var url: String? = nil
         if let dict = getConfigDictionary() {
             url = dict.value(forKey: type) as? String
@@ -47,36 +40,36 @@ public class Config {
         // I'am assuming the WhiskResources bundle is in the framework's root bundle
         let frameworkBundle = Bundle(for: Config.self)
         
-        if let bundlePath = frameworkBundle.pathForResource("OpenWhiskResources", ofType: "bundle") {
+        if let bundlePath = frameworkBundle.path(forResource: "OpenWhiskResources", ofType: "bundle") {
             if let bundle = Bundle(path: bundlePath) {
-                let configFile = bundle.pathForResource("OpenWhiskConfig", ofType: "plist")
+                let configFile = bundle.path(forResource: "OpenWhiskConfig", ofType: "plist")
                 
                 if let configFile = configFile {
                     let config = NSDictionary(contentsOfFile: configFile) as? [String: AnyObject]
                     if let config = config {
                         let urlConfig = config["Locations"] as? [String: String]
-                        return urlConfig
+                        return urlConfig as NSDictionary?
                     }
                 }
             }
-        } else if let bundlePath = frameworkBundle.pathForResource("OpenWhiskWatchResources", ofType: "bundle") {
+        } else if let bundlePath = frameworkBundle.path(forResource: "OpenWhiskWatchResources", ofType: "bundle") {
             if let bundle = Bundle(path: bundlePath) {
-                let configFile = bundle.pathForResource("OpenWhiskConfig", ofType: "plist")
+                let configFile = bundle.path(forResource: "OpenWhiskConfig", ofType: "plist")
                 
                 if let configFile = configFile {
                     let config = NSDictionary(contentsOfFile: configFile) as? [String: AnyObject]
                     if let config = config {
                         let urlConfig = config["Locations"] as? [String: String]
-                        return urlConfig
+                        return urlConfig as NSDictionary?
                     }
                 }
             }
         } else {
-            if let configFile = frameworkBundle.pathForResource("OpenWhiskConfig", ofType: "plist") {
+            if let configFile = frameworkBundle.path(forResource: "OpenWhiskConfig", ofType: "plist") {
                 let config = NSDictionary(contentsOfFile: configFile) as? [String: AnyObject]
                 if let config = config {
                     let urlConfig = config["Locations"] as? [String: String]
-                    return urlConfig
+                    return urlConfig as NSDictionary?
                 }
             } else {
                 print("Can't find configuration information")
@@ -95,15 +88,9 @@ public class Config {
     */
     public class func getAuthToken() -> (apiKey: String?, apiSecret: String?)? {
         
-<<<<<<< 42847cb29eb244df0cfcf5c29bb8229ad700e604
-        let dict = NSProcessInfo.processInfo().environment
-        let key = dict[Config.ApiKeyName]
-        let secret = dict[Config.ApiSecretName]
-=======
         let dict = ProcessInfo.processInfo.environment
         let key = dict["TESTAPIKEY"]
         let secret = dict["TESTAPISECRET"]
->>>>>>> Update to 7/5 Swift 3 syntax
         
         return(key, secret)
     }
