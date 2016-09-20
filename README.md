@@ -14,7 +14,7 @@ To build the source code:
 ### CocoaPods Installation
 The [official CocoaPods website](http://cocoapods.org) has detailed instructions on how to install and use CocoaPods.
 
-The following lines in a Podfile will install the SDK for an iOS app with a watch OS 2 extension: 
+The following lines in a Podfile will install the SDK for an iOS app with a watch OS extension: 
 
 ```
 install! 'cocoapods', :deterministic_uuids => false
