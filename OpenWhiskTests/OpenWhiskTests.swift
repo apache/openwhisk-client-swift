@@ -1,27 +1,28 @@
 /*
-* Copyright 2015-2016 IBM Corporation
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright 2015-2016 IBM Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import XCTest
 import OpenWhisk
 
 class NetworkUtilsDelegate: NSObject, URLSessionDelegate {
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: (Foundation.URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        
-        completionHandler(Foundation.URLSession.AuthChallengeDisposition.useCredential, URLCredential(forTrust: challenge.protectionSpace.serverTrust!))
+    
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        completionHandler(Foundation.URLSession.AuthChallengeDisposition.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
     }
+
 }
 
 class OpenWhiskTests: XCTestCase {
@@ -50,7 +51,7 @@ class OpenWhiskTests: XCTestCase {
     
     func testWhiskParameterizedAction() {
         
-        if let apiKey = apiKey, apiSecret = apiSecret {
+        if let apiKey = apiKey, let apiSecret = apiSecret {
             // allow for self-signed certificates
             let session = URLSession(configuration: URLSessionConfiguration.default, delegate: NetworkUtilsDelegate(), delegateQueue:OperationQueue.main)
             
@@ -59,42 +60,42 @@ class OpenWhiskTests: XCTestCase {
             whisk.urlSession = session
             
             // setup for async testing
-            let expectation = self.expectation(withDescription: "Whisk Callback")
+            let expectation = self.expectation(description: "Whisk Callback")
             
             do {
                 try whisk.invokeAction(name: "date", package: "util", namespace: "whisk.system", parameters: nil, hasResult: true,
-                    callback: {(reply, error) in
-                        
-                        if let error = error {
-                            if case let WhiskError.httpError(description, statusCode) = error {
-                                
-                                print("Error: \(description) statusCode: \(statusCode))")
-                                
-                                if statusCode != 401 && statusCode != 404 && statusCode != 408 && statusCode != 500 {
-                                    XCTFail("Error: \(description) statusCode: \(statusCode))")
-                                }
-                                
-                            }
-                        }
-                        
-                        if let reply = reply {
-                            
-                            print("Reply is \(reply)")
-                            XCTAssertNotNil(reply["activationId"])
-                            let id = reply["activationId"] as! String
-                            print("Got id \(id)")
-                        }
-                        
-                        expectation.fulfill()
-                        
-                        
+                                       callback: {(reply, error) in
+                                        
+                                        if let error = error {
+                                            if case let WhiskError.httpError(description, statusCode) = error {
+                                                
+                                                print("Error: \(description) statusCode: \(statusCode))")
+                                                
+                                                if statusCode != 401 && statusCode != 404 && statusCode != 408 && statusCode != 500 {
+                                                    XCTFail("Error: \(description) statusCode: \(statusCode))")
+                                                }
+                                                
+                                            }
+                                        }
+                                        
+                                        if let reply = reply {
+                                            
+                                            print("Reply is \(reply)")
+                                            XCTAssertNotNil(reply["activationId"])
+                                            let id = reply["activationId"] as! String
+                                            print("Got id \(id)")
+                                        }
+                                        
+                                        expectation.fulfill()
+                                        
+                                        
                 })
             } catch {
                 print(error)
                 XCTFail("Error invoking action \(error)")
             }
             
-            waitForExpectations(withTimeout: Timeout, handler: { error in
+            waitForExpectations(timeout: Timeout, handler: { error in
                 
                 if let error = error {
                     print("Error: \(error)")
@@ -107,9 +108,9 @@ class OpenWhiskTests: XCTestCase {
     
     func testWhiskQualifiedNameAction() {
         
-        if let apiKey = apiKey, apiSecret = apiSecret {
+        if let apiKey = apiKey, let apiSecret = apiSecret {
             // setup for async testing
-            let expectation = self.expectation(withDescription: "Whisk Callback")
+            let expectation = self.expectation(description: "Whisk Callback")
             // allow for self-signed certificates
             let session = URLSession(configuration: URLSessionConfiguration.default, delegate: NetworkUtilsDelegate(), delegateQueue:OperationQueue.main)
             
@@ -148,7 +149,7 @@ class OpenWhiskTests: XCTestCase {
                 XCTFail("Error invoking action \(error)")
             }
             
-            waitForExpectations(withTimeout: Timeout, handler: { error in
+            waitForExpectations(timeout: Timeout, handler: { error in
                 
                 if let error = error {
                     print("Error: \(error)")
@@ -161,9 +162,9 @@ class OpenWhiskTests: XCTestCase {
     
     func testWhiskSettingBaseUrl() {
         
-        if let apiKey = apiKey, apiSecret = apiSecret {
+        if let apiKey = apiKey, let apiSecret = apiSecret {
             // setup for async testing
-            let expectation = self.expectation(withDescription: "Whisk Callback")
+            let expectation = self.expectation(description: "Whisk Callback")
             
             // allow for self-signed certificates
             let session = URLSession(configuration: URLSessionConfiguration.default, delegate: NetworkUtilsDelegate(), delegateQueue:OperationQueue.main)
@@ -206,7 +207,7 @@ class OpenWhiskTests: XCTestCase {
                 XCTFail("Error invoking action \(error)")
             }
             
-            waitForExpectations(withTimeout: Timeout, handler: { error in
+            waitForExpectations(timeout: Timeout, handler: { error in
                 
                 if let error = error {
                     print("Error: \(error)")
@@ -220,9 +221,9 @@ class OpenWhiskTests: XCTestCase {
     
     func testWhiskVerboseReplies() {
         
-        if let apiKey = apiKey, apiSecret = apiSecret {
+        if let apiKey = apiKey, let apiSecret = apiSecret {
             // setup for async testing
-            let expectation = self.expectation(withDescription: "Whisk Callback")
+            let expectation = self.expectation(description: "Whisk Callback")
             
             // allow for self-signed certificates
             let session = URLSession(configuration: URLSessionConfiguration.default, delegate: NetworkUtilsDelegate(), delegateQueue:OperationQueue.main)
@@ -266,7 +267,7 @@ class OpenWhiskTests: XCTestCase {
                 XCTFail("Error invoking action \(error)")
             }
             
-            waitForExpectations(withTimeout: Timeout, handler: { error in
+            waitForExpectations(timeout: Timeout, handler: { error in
                 
                 if let error = error {
                     print("Error: \(error)")
@@ -280,9 +281,9 @@ class OpenWhiskTests: XCTestCase {
     
     func testWhiskTrigger() {
         
-        if let apiKey = apiKey, apiSecret = apiSecret {
+        if let apiKey = apiKey, let apiSecret = apiSecret {
             // setup for async testing
-            let expectation = self.expectation(withDescription: "Whisk Callback")
+            let expectation = self.expectation(description: "Whisk Callback")
             
             // allow for self-signed certificates
             let session = URLSession(configuration: URLSessionConfiguration.default, delegate: NetworkUtilsDelegate(), delegateQueue:OperationQueue.main)
@@ -297,7 +298,9 @@ class OpenWhiskTests: XCTestCase {
                 try whisk.fireTrigger(name: "myTrigger", callback: { (reply, error) in
                     
                     if let error = error {
-                        if case let WhiskError.HTTPError(description, statusCode, "default") = error {
+                        
+                        
+                        if case let WhiskError.httpError(description: description, statusCode: statusCode) = error {
                             
                             print("Error: \(description) statusCode: \(statusCode))")
                             
@@ -321,7 +324,7 @@ class OpenWhiskTests: XCTestCase {
                 XCTFail("Error invoking trigger \(error)")
             }
             
-            waitForExpectations(withTimeout: Timeout, handler: { error in
+            waitForExpectations(timeout: Timeout, handler: { error in
                 
                 if let error = error {
                     print("Error: \(error)")
