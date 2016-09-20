@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'OpenWhisk'
-	s.version      = '0.1.7'
+	s.version      = '0.2.0'
 	s.summary      = 'Mobile SDK to use OpenWhisk server-less environment'
 	s.homepage     = 'http://www.ibm.com/mobilefirst/us/en/'
 	s.license      = { :type => 'Apache License, Version 2.0' }
@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
 
 	DESC
 
-	s.ios.deployment_target = '9.0'
-	s.watchos.deployment_target = '2.0'
+	s.ios.deployment_target = '10.0'
+	s.watchos.deployment_target = '3.0'
 
 	s.source       = { :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => "#{s.version}" }
 
