@@ -181,7 +181,7 @@ whisk.baseURL = "http://localhost:8080"
 ```
 will use an OpenWhisk running at localhost:8080.  If you do not specify the baseUrl, the Mobile SDK will use the instance running at https://openwhisk.ng.bluemix.net
 
-You can pass in a custom NSURLSession in case you require special network handling.  For example, you may have your own OpenWhisk installation that uses self-signed certificates:
+You can pass in a custom URLSession in case you require special network handling.  For example, you may have your own OpenWhisk installation that uses self-signed certificates:
 
 ```swift
 
