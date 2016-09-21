@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D61CBB251D9205E600176E5D /* OpenWhiskConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6C9C3B51C8F53C9002BDB13 /* OpenWhiskConfig.plist */; };
 		D64559FC1C8F49A600AA6840 /* OpenWhiskButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E3E6511C72760C00843E16 /* OpenWhiskButton.swift */; };
 		D6C9C3B71C8F53C9002BDB13 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C9C3B41C8F53C9002BDB13 /* Config.swift */; };
 		D6C9C3B81C8F53C9002BDB13 /* OpenWhiskConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6C9C3B51C8F53C9002BDB13 /* OpenWhiskConfig.plist */; };
@@ -253,6 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D61CBB251D9205E600176E5D /* OpenWhiskConfig.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
