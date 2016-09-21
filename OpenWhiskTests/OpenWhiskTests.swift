@@ -298,14 +298,12 @@ class OpenWhiskTests: XCTestCase {
                 try whisk.fireTrigger(name: "myTrigger", callback: { (reply, error) in
                     
                     if let error = error {
-                        
-                        
-                        if case let WhiskError.httpError(description: description, statusCode: statusCode) = error {
+                        if case let WhiskError.httpError(description, statusCode) = error {
                             
                             print("Error: \(description) statusCode: \(statusCode))")
                             
                             //  actually any of these status codes are probably OK since the API call succeeded
-                            if statusCode != 401 && statusCode != 408 && statusCode != 500 {
+                            if statusCode != 401 && statusCode != 404 && statusCode != 408 && statusCode != 500 {
                                 XCTFail("Error: \(description) statusCode: \(statusCode))")
                             }
                             
