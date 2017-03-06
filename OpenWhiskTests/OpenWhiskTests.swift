@@ -63,7 +63,7 @@ class OpenWhiskTests: XCTestCase {
             let expectation = self.expectation(description: "Whisk Callback")
             
             do {
-                try whisk.invokeAction(name: "date", package: "util", namespace: "whisk.system", parameters: nil, hasResult: true,
+                try whisk.invokeAction(name: "date", package: "utils", namespace: "whisk.system", parameters: nil, hasResult: true,
                                        callback: {(reply, error) in
                                         
                                         if let error = error {
@@ -118,7 +118,7 @@ class OpenWhiskTests: XCTestCase {
             let whisk = Whisk(credentials: credentials)
             whisk.urlSession = session
             do {
-                try whisk.invokeAction(qualifiedName: "/whisk.system/util/date", parameters: nil, hasResult: true, callback: {(reply, error) in
+                try whisk.invokeAction(qualifiedName: "/whisk.system/utils/date", parameters: nil, hasResult: true, callback: {(reply, error) in
                     
                     if let error = error {
                         if case let WhiskError.httpError(description, statusCode) = error {
@@ -176,7 +176,7 @@ class OpenWhiskTests: XCTestCase {
             do {
                 whisk.baseURL = "https://openwhisk.ng.bluemix.net"
                 
-                try whisk.invokeAction(qualifiedName: "/whisk.system/util/date", parameters: nil, hasResult: true, callback: {(reply, error) in
+                try whisk.invokeAction(qualifiedName: "/whisk.system/utils/date", parameters: nil, hasResult: true, callback: {(reply, error) in
                     
                     if let error = error {
                         if case let WhiskError.httpError(description, statusCode) = error {
@@ -236,7 +236,7 @@ class OpenWhiskTests: XCTestCase {
             do {
                 whisk.verboseReplies = true
                 
-                try whisk.invokeAction(qualifiedName: "/whisk.system/util/date", parameters: nil, hasResult: true, callback: {(reply, error) in
+                try whisk.invokeAction(qualifiedName: "/whisk.system/utils/date", parameters: nil, hasResult: true, callback: {(reply, error) in
                     
                     if let error = error {
                         if case let WhiskError.httpError(description, statusCode) = error {
