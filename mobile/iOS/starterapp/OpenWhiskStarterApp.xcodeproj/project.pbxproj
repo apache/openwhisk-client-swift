@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A876F95BF11B6113CAFD9683 /* Pods_OpenWhiskStarterApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C18E934BAB74A8F669FB576 /* Pods_OpenWhiskStarterApp.framework */; };
 		D65844461C727BBC001581F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65844451C727BBC001581F3 /* AppDelegate.swift */; };
 		D65844481C727BBC001581F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65844471C727BBC001581F3 /* ViewController.swift */; };
 		D658444B1C727BBC001581F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D65844491C727BBC001581F3 /* Main.storyboard */; };
@@ -33,6 +34,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2959AF4398B3AA80564C2D04 /* Pods-OpenWhiskStarterApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenWhiskStarterApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenWhiskStarterApp/Pods-OpenWhiskStarterApp.debug.xcconfig"; sourceTree = "<group>"; };
+		8C18E934BAB74A8F669FB576 /* Pods_OpenWhiskStarterApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenWhiskStarterApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D65844421C727BBC001581F3 /* OpenWhiskStarterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenWhiskStarterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D65844451C727BBC001581F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D65844471C727BBC001581F3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +48,7 @@
 		D658445A1C727C2D001581F3 /* ResultSetTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultSetTableController.swift; sourceTree = "<group>"; };
 		D658445B1C727C2D001581F3 /* SelfSignedNetworkDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfSignedNetworkDelegate.swift; sourceTree = "<group>"; };
 		D658445C1C727C2D001581F3 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		FAF80DAB673A9E7E8AC1D44E /* Pods-OpenWhiskStarterApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenWhiskStarterApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenWhiskStarterApp/Pods-OpenWhiskStarterApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,17 +56,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A876F95BF11B6113CAFD9683 /* Pods_OpenWhiskStarterApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19C2AB47312D7E18E83745BD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2959AF4398B3AA80564C2D04 /* Pods-OpenWhiskStarterApp.debug.xcconfig */,
+				FAF80DAB673A9E7E8AC1D44E /* Pods-OpenWhiskStarterApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		23725AC2F19C7559B0E0A283 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8C18E934BAB74A8F669FB576 /* Pods_OpenWhiskStarterApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D65844391C727BBC001581F3 = {
 			isa = PBXGroup;
 			children = (
 				D65844441C727BBC001581F3 /* OpenWhiskStarterApp */,
 				D65844431C727BBC001581F3 /* Products */,
+				19C2AB47312D7E18E83745BD /* Pods */,
+				23725AC2F19C7559B0E0A283 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,10 +123,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D65844541C727BBC001581F3 /* Build configuration list for PBXNativeTarget "OpenWhiskStarterApp" */;
 			buildPhases = (
+				0D555FCCEFEA3E092AB6381A /* [CP] Check Pods Manifest.lock */,
 				D658443E1C727BBC001581F3 /* Sources */,
 				D658443F1C727BBC001581F3 /* Frameworks */,
 				D65844401C727BBC001581F3 /* Resources */,
 				D648FD291C72804F0088C7C1 /* Embed Frameworks */,
+				17B39CA85AFF9440A7860D2E /* [CP] Embed Pods Frameworks */,
+				3A2BC21CBA0FE292175B4880 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -160,6 +187,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0D555FCCEFEA3E092AB6381A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		17B39CA85AFF9440A7860D2E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenWhiskStarterApp/Pods-OpenWhiskStarterApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A2BC21CBA0FE292175B4880 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenWhiskStarterApp/Pods-OpenWhiskStarterApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D658443E1C727BBC001581F3 /* Sources */ = {
@@ -288,8 +363,9 @@
 		};
 		D65844551C727BBC001581F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2959AF4398B3AA80564C2D04 /* Pods-OpenWhiskStarterApp.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -306,8 +382,9 @@
 		};
 		D65844561C727BBC001581F3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FAF80DAB673A9E7E8AC1D44E /* Pods-OpenWhiskStarterApp.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
