@@ -26,8 +26,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var statusLabel: UILabel!
     
     // Change to your whisk app key and secret.
-    let WhiskAppKey: String = "AppKey"
-    let WhiskAppSecret: String = "AppSecret"
+    let WhiskAppKey: String = "MyAppKey"
+    let WhiskAppSecret: String = "MyAppSecret"
     
     // the URL for Whisk backend
     let baseUrl: String? = "https://openwhisk.ng.bluemix.net"
@@ -36,7 +36,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     // Choice: specify components
     let MyNamespace: String = "whisk.system"
-    let MyPackage: String? = "util"
+    let MyPackage: String? = "utils"
     let MyWhiskAction: String = "date"
     
     var MyActionParameters: [String:AnyObject]? = nil

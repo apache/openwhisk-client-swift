@@ -2,7 +2,7 @@ use_frameworks!
 
 target 'OpenWhiskStarterApp' do
      platform :ios, '10.0'
-     pod 'OpenWhisk', :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => '0.2.1'
+     pod 'OpenWhisk', :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => '0.2.2'
 end
 
 post_install do |installer|
