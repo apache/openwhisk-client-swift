@@ -1,5 +1,9 @@
 # Swift Client SDK for OpenWhisk
-This is a Swift-based client SDK for OpenWhisk. You can use it to connect to the [IBM Bluemix OpenWhisk service](http://www.ibm.com/cloud-computing/bluemix/openwhisk/), or you own installation of [OpenWhisk](https://github.com/openwhisk/openwhisk).  It partially implements the OpenWhisk [REST API](https://github.com/openwhisk/openwhisk/blob/master/docs/reference.md#rest-api) and allows you to invoke actions and fire triggers. The client SDK is compatible with Swift 3.x and runs on iOS 9 & 10, WatchOS 3, and Darwin.  Since this code uses classes like URLSession, Linux support is linked to the current status of [Foundation on Linux](https://github.com/apple/swift-corelibs-foundation). 
+
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Build Status](https://api.travis-ci.org/apache/incubator-openwhisk-client-swift.svg?branch=master)](https://api.travis-ci.org/apache/incubator-openwhisk-client-swift)
+
+This is a Swift-based client SDK for OpenWhisk. You can use it to connect to the [IBM Bluemix OpenWhisk service](http://www.ibm.com/cloud-computing/bluemix/openwhisk/), or you own installation of [OpenWhisk](https://github.com/openwhisk/openwhisk).  It partially implements the OpenWhisk [REST API](https://github.com/openwhisk/openwhisk/blob/master/docs/reference.md#rest-api) and allows you to invoke actions and fire triggers. The client SDK is compatible with Swift 3.x and runs on iOS 9 & 10, WatchOS 3, and Darwin.  Since this code uses classes like URLSession, Linux support is linked to the current status of [Foundation on Linux](https://github.com/apple/swift-corelibs-foundation).
 
 ## Installation
 You can install the SDK using the source code in this repo, as a Cocoapod for iOS and WatchOS apps, Carthage, and as a package using the Swift Package Manager for Darwin CLI apps.
@@ -14,7 +18,7 @@ To build the source code:
 ### CocoaPods Installation
 The [official CocoaPods website](http://cocoapods.org) has detailed instructions on how to install and use CocoaPods.
 
-The following lines in a Podfile will install the SDK for an iOS app with a watch OS extension: 
+The following lines in a Podfile will install the SDK for an iOS app with a watch OS extension:
 
 ```
 install! 'cocoapods', :deterministic_uuids => false
@@ -24,7 +28,7 @@ target 'MyApp' do
      pod 'OpenWhisk', :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => '0.2.2'
 end
 
-target 'MyApp WatchKit Extension' do 
+target 'MyApp WatchKit Extension' do
      pod 'OpenWhisk', :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => '0.2.2'
 end
 ```
@@ -48,7 +52,7 @@ end
 
 Visit the [official Carthage site on Github](https://github.com/Carthage/Carthage) for detailed instructions on installing and using Carthage.
 
-Here is an example Cartfile for iOS installation using Carthage:  
+Here is an example Cartfile for iOS installation using Carthage:
 
 ```
 github "openwhisk/openwhisk-client-swift.git" ~> 0.2.2 # Or latest version
@@ -102,21 +106,21 @@ var params = Dictionary<String, String>()
 params["payload"] = "Hi from mobile"
 
 do {
-    try whisk.invokeAction(name: "helloConsole", package: "mypackage", namespace: "mynamespace", parameters: params, hasResult: false, callback: {(reply, error) -> Void in 
+    try whisk.invokeAction(name: "helloConsole", package: "mypackage", namespace: "mynamespace", parameters: params, hasResult: false, callback: {(reply, error) -> Void in
         if let error = error {
             //do something
             print("Error invoking action \(error.localizedDescription)")
         } else {
             print("Action invoked!")
         }
-        
+
     })
 } catch {
     print("Error \(error)")
 }
 ```
 
-In the above example, we are invoking the "helloConsole" action using the default namespace. 
+In the above example, we are invoking the "helloConsole" action using the default namespace.
 
 ### Fire an OpenWhisk Trigger
 To fire a remote OpenWhisk trigger, call the "fireTrigger" method.  Pass in parameters as required using a dictionary.
@@ -129,7 +133,7 @@ locationParams["payload"] = "{\"lat\":41.27093, \"lon\":-73.77763}"
 
 do {
     try whisk.fireTrigger(name: "locationChanged", package: "mypackage", namespace: "mynamespace", parameters: locationParams, callback: {(reply, error) -> Void in
-        
+
         if let error = error {
             print("Error firing trigger \(error.localizedDescription)")
         } else {
@@ -148,17 +152,17 @@ If the action returns a result, set hasResult to true in the invokeAction call. 
 ```swift
 do {
     try whisk.invokeAction(name: "actionWithResult", package: "mypackage", namespace: "mynamespace", parameters: params, hasResult: true, callback: {(reply, error) -> Void in
-        
+
         if let error = error {
             //do something
             print("Error invoking action \(error.localizedDescription)")
-            
+
         } else {
             var result = reply["result"]
             print("Got result \(result)")
         }
-        
-        
+
+
     })
 } catch {
     print("Error \(error)")
@@ -188,7 +192,7 @@ You can pass in a custom URLSession in case you require special network handling
 // create a network delegate that trusts everything
 class NetworkUtilsDelegate: NSObject, URLSessionDelegate {
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        
+
         completionHandler(Foundation.URLSession.AuthChallengeDisposition.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
     }
 }
@@ -205,7 +209,7 @@ All actions and triggers have a fully qualified name which is made up of a names
 1. qName = "foo" will result in namespace = default, package = default, action/trigger = "foo"
 2. qName = "mypackage/foo" will result in namespace = default, package = mypackage, action/trigger = "foo"
 3. qName = "/mynamespace/foo" will result in namespace = mynamespace, package = default, action/trigger = "foo"
-4. qName = "/mynamespace/mypackage/foo will result in namespace = mynamespace, package = mypackage, action/trigger = "foo" 
+4. qName = "/mynamespace/mypackage/foo will result in namespace = mynamespace, package = mypackage, action/trigger = "foo"
 
 All other combinations will throw a WhiskError.QualifiedName error. When using qualified names, you must wrap the call in a do/try/catch block.
 
@@ -219,7 +223,7 @@ whiskButton.setupWhiskAction("helloConsole", package: "mypackage", namespace: "_
 
 let myParams = ["name":"value"]
 
-// Call this when you detect a press event, e.g. in an IBAction, to invoke the action 
+// Call this when you detect a press event, e.g. in an IBAction, to invoke the action
 whiskButton.invokeAction(parameters: myParams, callback: { reply, error in
     if let error = error {
         print("Oh no, error: \(error)")
@@ -232,7 +236,7 @@ whiskButton.invokeAction(parameters: myParams, callback: { reply, error in
 
 var whiskButtonSelfContained = WhiskButton(frame: CGRectMake(0,0,20,20))
 whiskButtonSelfContained.listenForPressEvents = true
-do { 
+do {
 
    // use qualified name API which requires do/try/catch
    try whiskButtonSelfContained.setupWhiskAction("mypackage/helloConsole", credentials: credentialsConfiguration!, hasResult: false, parameters: nil, urlSession: nil)
