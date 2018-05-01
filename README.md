@@ -25,11 +25,11 @@ install! 'cocoapods', :deterministic_uuids => false
 use_frameworks!
 
 target 'MyApp' do
-     pod 'OpenWhisk', :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => '0.2.2'
+     pod 'OpenWhisk', :git => 'https://github.com/apache/incubator-openwhisk-client-swift.git', :tag => '0.2.2'
 end
 
 target 'MyApp WatchKit Extension' do
-     pod 'OpenWhisk', :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => '0.2.2'
+     pod 'OpenWhisk', :git => 'https://github.com/apache/incubator-openwhisk-client-swift.git', :tag => '0.2.2'
 end
 ```
 You may get the warning 'target overrides the `EMBEDDED_CONTENT_CONTAINS_SWIFT` ' when you have a watch target.  You can eliminate this warning by changing this setting in "Build Settings" to the value '$(inherited)'.
@@ -55,7 +55,7 @@ Visit the [official Carthage site on Github](https://github.com/Carthage/Carthag
 Here is an example Cartfile for iOS installation using Carthage:
 
 ```
-github "openwhisk/openwhisk-client-swift.git" ~> 0.2.2 # Or latest version
+github "apache/incubator-openwhisk-client-swift.git" ~> 0.2.2 # Or latest version
 
 ```
 
@@ -68,7 +68,7 @@ import PackageDescription
 let package = Package(
   name:  "PackageTest",
   dependencies: [
-    .Package(url:  "https://github.com/openwhisk/openwhisk-client-swift.git", versions: Version(0,0,0)..<Version(1,0,0)),
+    .Package(url:  "https://github.com/apache/incubator-openwhisk-client-swift.git", versions: Version(0,0,0)..<Version(1,0,0)),
   ]
 )
 ```

@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 	s.ios.deployment_target = '9.0'
 	s.watchos.deployment_target = '3.0'
 
-	s.source       = { :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => "#{s.version}" }
+	s.source       = { :git => 'https://github.com/apache/incubator-openwhisk-client-swift.git', :tag => "#{s.version}" }
 
 
 	s.source_files  = 'OpenWhisk/*.{swift,h}'
