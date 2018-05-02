@@ -60,7 +60,7 @@ import UIKit
     public var actionButtonCallback: ((Dictionary<String,AnyObject>?, WhiskError?) -> Void)?
 
 
-    func buttonPressed() {
+    @objc func buttonPressed() {
         invokeAction(parameters: nil, actionCallback: actionButtonCallback)
     }
 

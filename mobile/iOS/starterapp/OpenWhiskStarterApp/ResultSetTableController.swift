@@ -66,7 +66,7 @@ class ResultSetTableController: UITableViewController {
                                 options: JSONSerialization.WritingOptions(rawValue: 0))
                             let theJSONText = NSString(data: theJSONData,
                                 encoding: String.Encoding.ascii.rawValue)
-                            values.append(theJSONText as! String)
+                            values.append(theJSONText! as String)
                             isComplex.append(true)
                         } catch {
                             print("Error converting value to JSON")

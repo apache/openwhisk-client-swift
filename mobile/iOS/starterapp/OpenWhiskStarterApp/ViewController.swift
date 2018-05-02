@@ -84,7 +84,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             } else if let reply = reply {
                 let str = "\(reply)"
                 print("reply: \(str)")
-                self.statusLabel.text = "Action \(self.MyNamespace)/\(self.MyWhiskAction) returned \(str.characters.count) characters"
+                self.statusLabel.text = "Action \(self.MyNamespace)/\(self.MyWhiskAction) returned \(str.count) characters"
                 if let result = reply["result"] as? [String:AnyObject] {
                     self.displayOutput(reply: result)
                 }
