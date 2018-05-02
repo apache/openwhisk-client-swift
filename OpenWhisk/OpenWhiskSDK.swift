@@ -88,7 +88,7 @@ public class Whisk {
         set {
             if let url = newValue {
 
-                let c = url.characters.last
+                let c = url.last
 
                 let separater =  c == "/" ? "" : "/"
 
@@ -214,12 +214,12 @@ public class Whisk {
 
         var namespaceStr = namespace
 
-        if namespace.characters.count == 0 {
+        if namespace.count == 0 {
             namespaceStr = "_"
         }
 
         if let package = package {
-            if package.characters.count == 0 {
+            if package.count == 0 {
                 syncName = syncName + namespaceStr+"/"+typeStr+"/"+name
             } else {
                 syncName = syncName + namespaceStr+"/"+typeStr+"/"+package+"/"+name
@@ -430,11 +430,11 @@ public class Whisk {
         var name = ""
         var doesSpecifyNamespace = false
 
-        if qName.characters.first == "/" {
+        if qName.first == "/" {
             doesSpecifyNamespace = true
         }
 
-        let pathParts = qName.characters.split { $0 == "/" }.map(String.init)
+        let pathParts = qName.split { $0 == "/" }.map(String.init)
 
         if doesSpecifyNamespace == true {
             if pathParts.count == 2 {
