@@ -129,7 +129,6 @@
 				D65844401C727BBC001581F3 /* Resources */,
 				D648FD291C72804F0088C7C1 /* Embed Frameworks */,
 				17B39CA85AFF9440A7860D2E /* [CP] Embed Pods Frameworks */,
-				3A2BC21CBA0FE292175B4880 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -223,21 +222,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenWhiskStarterApp/Pods-OpenWhiskStarterApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3A2BC21CBA0FE292175B4880 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenWhiskStarterApp/Pods-OpenWhiskStarterApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

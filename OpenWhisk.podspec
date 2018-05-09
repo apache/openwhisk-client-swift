@@ -1,21 +1,21 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'OpenWhisk'
-	s.version      = '0.2.2'
-	s.summary      = 'Mobile SDK to use OpenWhisk server-less environment'
-	s.homepage     = 'http://www.ibm.com/mobilefirst/us/en/'
+	s.version      = '0.3.0'
+	s.summary      = 'Apache OpenWhisk Client SDK'
+	s.homepage     = 'https://apache.openwhisk.org'
 	s.license      = { :type => 'Apache License, Version 2.0' }
-	s.authors      = 'IBM'
+	s.authors      = 'Apache OpenWhisk'
 
 	s.description  = <<-DESC
 	OpenWhisk is a cloud-first distributed event-based programming service. OpenWhisk provides a programming model to upload event handlers to a cloud service, and register the handlers to respond to various events.
 
 	DESC
 
-	s.ios.deployment_target = '9.0'
-	s.watchos.deployment_target = '3.0'
+	s.ios.deployment_target = '11.0'
+	s.watchos.deployment_target = '4.0'
 
-	s.source       = { :git => 'https://github.com/openwhisk/openwhisk-client-swift.git', :tag => "#{s.version}" }
+	s.source       = { :git => 'https://github.com/apache/incubator-openwhisk-client-swift.git', :tag => "#{s.version}" }
 
 
 	s.source_files  = 'OpenWhisk/*.{swift,h}'
